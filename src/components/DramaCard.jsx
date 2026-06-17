@@ -8,7 +8,7 @@ function DramaCard({ drama }) {
           className="w-full object-cover rounded-lg group-hover:scale-105 transition duration-300"
         />
       </div>
-      <p className="mt-2 text-xs text-white-400 truncate">{drama.title}</p>
+      <p className="mt-2 text-xs text-white-400 truncate">{drama.title} ({drama.year})</p>
       <p className="text-xs text-rose-400">⭐ {drama.rating}</p>
     </div>
   )

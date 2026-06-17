@@ -1,11 +1,13 @@
+import { useState } from 'react'
 import Header from '../components/Header'
 import DramaGrid from '../components/DramaGrid'
+import SearchBar from '../components/SearchBar'
 import { useDramas } from '../hooks/useDramas'
 
 function Home() {
-  const { dramas, loading, error } = useDramas()
+  const [searchQuery, setSearchQuery] = useState('')
+  const { dramas, loading, error } = useDramas(searchQuery)
 
-  if (loading) return <p className="text-white p-6">Loading dramas...</p>
   if (error) return <p className="text-red-500 p-6">Something went wrong.</p>
 
   return (
@@ -13,7 +15,12 @@ function Home() {
       <Header />
       <main className="max-w-7xl mx-auto px-6 py-8">
         <h2 className="text-xl font-semibold mb-6 text-gray-200">Popular Dramas</h2>
-        <DramaGrid dramas={dramas} />
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        {loading ? (
+          <p className="text-gray-500">Loading...</p>
+        ) : (
+          <DramaGrid dramas={dramas} />
+        )}
       </main>
     </div>
   )
