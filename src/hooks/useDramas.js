@@ -9,7 +9,7 @@ export function useDramas(searchQuery = '', selectedGenre = '') {
   useEffect(() => {
     async function fetchDramas() {
       setLoading(true)
-      let query = supabase.from('dramas').select('*').limit(30)
+      let query = supabase.from('dramas').select('*').limit(32)
 
       if (searchQuery) {
         query = query.ilike('title', `%${searchQuery}%`)
