@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 
-export function useDramas(searchQuery = '') {
+export function useDramas(searchQuery = '', selectedGenre = '') {
   const [dramas, setDramas] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -15,6 +15,10 @@ export function useDramas(searchQuery = '') {
         query = query.ilike('title', `%${searchQuery}%`)
       }
 
+      if (selectedGenre) {
+        query = query.ilike('genre', `%${selectedGenre}%`)
+      }
+
       const { data, error } = await query
 
       if (error) setError(error)
@@ -23,7 +27,7 @@ export function useDramas(searchQuery = '') {
     }
 
     fetchDramas()
-  }, [searchQuery])
+  }, [searchQuery, selectedGenre])
 
   return { dramas, loading, error }
 }
