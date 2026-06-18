@@ -20,16 +20,21 @@ function Header() {
         >
           DramaList
         </h1>
-        <nav className="flex gap-6 text-base text-gray-400">
-          <a onClick={() => navigate('/')} className="hover:text-white transition">Dramas</a>
+        <nav className="flex gap-3 md:gap-6 text-sm md:text-base text-gray-400 items-center">
+          <span
+            onClick={() => navigate('/')}
+            className="hover:text-white transition cursor-pointer"
+          >
+            Dramas
+          </span>
           {user ? (
             <>
-              <a 
-                onClick={() => navigate('/watchlist')} 
+              <span
+                onClick={() => navigate('/watchlist')}
                 className="hover:text-white transition cursor-pointer"
               >
                 Watchlist
-              </a>
+              </span>
               <button
                 onClick={handleSignOut}
                 className="hover:text-white transition"

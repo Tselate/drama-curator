@@ -36,8 +36,8 @@ function Home() {
         </p>
       </div>
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl mb-1 font-semibold text-gray-200">Popular Dramas</h2>
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
+          <h2 className="text-2xl mb-2 ml-1 font-semibold text-gray-200">Popular Dramas</h2>
           <SearchBar value={searchQuery} onChange={handleSearchChange} />
         </div>
         <FilterBar selectedGenre={selectedGenre} onGenreChange={handleGenreChange} />
