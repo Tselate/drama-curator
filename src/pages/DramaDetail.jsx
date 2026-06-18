@@ -28,7 +28,7 @@ function DramaDetail() {
       <main className="max-w-6xl mx-auto px-6 py-8">
         <button
           onClick={() => navigate(-1)}
-          className="text-gray-400 hover:text-white mb-6 transition"
+          className="text-gray-400 text-lg hover:text-white mb-6 transition"
         >
           ← Back
         </button>
@@ -37,33 +37,33 @@ function DramaDetail() {
             <img
               src={drama.poster_url}
               alt={drama.title}
-              className="w-48 rounded-lg self-start"
+              className="w-88 rounded-lg self-start"
             />
             <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-2">{drama.title}</h1>
-              <div className="flex gap-4 text-sm text-gray-400 mb-4">
+              <h1 className="text-4xl font-bold mb-2">{drama.title}</h1>
+              <div className="flex gap-4 text-base text-gray-400 mb-4">
                 <span>{drama.year}</span>
                 <span>⭐ {drama.rating}</span>
                 <span>{drama.episode_count} episodes</span>
                 <span>{drama.content_rating}</span>
               </div>
               <p className="text-gray-300 mb-4">{drama.synopsis}</p>
-              <p className="text-sm text-gray-400 mb-2">
+              <p className="text-base text-gray-400 mb-2">
                 <span className="text-gray-200 font-semibold">Genres: </span>
                 {drama.genre}
               </p>
-              <p className="text-sm text-gray-400 mb-2">
+              <p className="text-base text-gray-400 mb-2">
                 <span className="text-gray-200 font-semibold">Cast: </span>
                 {drama.cast}
               </p>
-              <p className="text-sm text-gray-400 mb-6">
+              <p className="text-base text-gray-400 mb-6">
                 <span className="text-gray-200 font-semibold">Network: </span>
                 {drama.network}
               </p>
 
               {user ? (
                 <div>
-                  <p className="text-sm text-gray-400 mb-2 font-semibold">Add to Watchlist:</p>
+                  <p className="text-base text-gray-400 mb-2 font-semibold">Add to Watchlist:</p>
                   <div className="flex flex-wrap gap-2">
                     {statusOptions.map(option => (
                       <button
@@ -75,7 +75,7 @@ function DramaDetail() {
                             ? updateStatus(drama.id, option.value)
                             : addToWatchlist(drama.id, option.value)
                         }
-                        className={`px-4 py-2 rounded-lg text-sm transition ${
+                        className={`px-4 py-2 rounded-lg text-base transition ${
                           status === option.value
                             ? 'bg-rose-500 text-white'
                             : 'bg-gray-800 text-gray-400 hover:text-white'
@@ -87,7 +87,7 @@ function DramaDetail() {
                     {status && (
                       <button
                         onClick={() => removeFromWatchlist(drama.id)}
-                        className="px-4 py-2 rounded-lg text-sm bg-gray-800 text-red-400 hover:text-red-300 transition"
+                        className="px-4 py-2 rounded-lg text-base bg-gray-800 text-red-400 hover:text-red-300 transition"
                       >
                         ✕ Remove
                       </button>
@@ -97,7 +97,7 @@ function DramaDetail() {
               ) : (
                 <button
                   onClick={() => navigate('/auth')}
-                  className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg text-sm transition"
+                  className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg text-base transition"
                 >
                   Sign in to add to Watchlist
                 </button>

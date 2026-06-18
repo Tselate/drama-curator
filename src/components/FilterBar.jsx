@@ -5,7 +5,7 @@ function FilterBar({ selectedGenre, onGenreChange }) {
     <div className="flex flex-wrap gap-2 mb-6">
       <button
         onClick={() => onGenreChange('')}
-        className={`px-3 py-1 rounded-full text-sm transition ${
+        className={`px-3 py-1 rounded-full text-base transition ${
           selectedGenre === ''
             ? 'bg-rose-500 text-white'
             : 'bg-gray-800 text-gray-400 hover:text-white'
@@ -17,7 +17,7 @@ function FilterBar({ selectedGenre, onGenreChange }) {
         <button
           key={genre}
           onClick={() => onGenreChange(genre)}
-          className={`px-3 py-1 rounded-full text-sm transition ${
+          className={`px-3 py-1 rounded-full text-base transition ${
             selectedGenre === genre
               ? 'bg-rose-500 text-white'
               : 'bg-gray-800 text-gray-400 hover:text-white'

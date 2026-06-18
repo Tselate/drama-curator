@@ -4,6 +4,7 @@ import DramaGrid from '../components/DramaGrid'
 import SearchBar from '../components/SearchBar'
 import FilterBar from '../components/FilterBar'
 import { useDramas } from '../hooks/useDramas'
+import SkeletonGrid from '../components/SkeletonGrid'
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -25,12 +26,23 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <Header />
+      {/* HERO */}
+      <div className="bg-gradient-to-b from-gray-900 to-gray-950 py-16 px-6 text-center">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          Discover Your Next <span className="text-rose-500">Obsession</span>
+        </h2>
+        <p className="text-gray-400 text-lg max-w-xl mx-auto">
+          Track, discover and explore the best Korean, Turkish, Japanese and Chinese dramas — all in one place.
+        </p>
+      </div>
       <main className="max-w-7xl mx-auto px-6 py-8">
-        <h2 className="text-xl font-semibold mb-6 text-gray-200">Popular Dramas</h2>
-        <SearchBar value={searchQuery} onChange={handleSearchChange} />
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl mb-1 font-semibold text-gray-200">Popular Dramas</h2>
+          <SearchBar value={searchQuery} onChange={handleSearchChange} />
+        </div>
         <FilterBar selectedGenre={selectedGenre} onGenreChange={handleGenreChange} />
         {loading && dramas.length === 0 ? (
-          <p className="text-gray-400">Loading dramas...</p>
+          <SkeletonGrid />
         ) : (
           <>
             <DramaGrid dramas={dramas} />
