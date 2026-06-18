@@ -1,19 +1,31 @@
-import { useParams, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import { useDrama } from "../hooks/useDrama";
+import { useParams, useNavigate } from 'react-router-dom'
+import Header from '../components/Header'
+import { useDrama } from '../hooks/useDrama'
+import { useWatchlist } from '../hooks/useWatchlist'
+import { useAuth } from '../hooks/useAuth'
 
 function DramaDetail() {
-  const { id } = useParams();
-  const { drama, loading, error } = useDrama(id);
-  const navigate = useNavigate();
+  const { id } = useParams()
+  const { drama, loading, error } = useDrama(id)
+  const { addToWatchlist, updateStatus, removeFromWatchlist, getStatus } = useWatchlist()
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
-  if (loading) return <p className="text-white p-6">Loading...</p>;
-  if (error) return <p className="text-red-500 p-6">Something went wrong.</p>;
+  if (loading) return <p className="text-white p-6">Loading...</p>
+  if (error) return <p className="text-red-500 p-6">Something went wrong.</p>
+
+  const status = getStatus(drama.id)
+
+  const statusOptions = [
+    { value: 'watching', label: '👁 Watching' },
+    { value: 'completed', label: '✅ Completed' },
+    { value: 'want_to_watch', label: '🔖 Want to Watch' },
+  ]
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       <Header />
-      <main className="max-w-7xl mx-auto px-6 py-10">
+      <main className="max-w-6xl mx-auto px-6 py-8">
         <button
           onClick={() => navigate(-1)}
           className="text-gray-400 hover:text-white mb-6 transition"
@@ -27,13 +39,12 @@ function DramaDetail() {
               alt={drama.title}
               className="w-48 rounded-lg self-start"
             />
-            <div>
-              <h1 className="text-3xl font-bold mb-2">
-                {drama.title} ({drama.year})
-              </h1>
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold mb-2">{drama.title}</h1>
               <div className="flex gap-4 text-sm text-gray-400 mb-4">
+                <span>{drama.year}</span>
                 <span>⭐ {drama.rating}</span>
-                <span>{drama.episode_count}</span>
+                <span>{drama.episode_count} episodes</span>
                 <span>{drama.content_rating}</span>
               </div>
               <p className="text-gray-300 mb-4">{drama.synopsis}</p>
@@ -45,16 +56,58 @@ function DramaDetail() {
                 <span className="text-gray-200 font-semibold">Cast: </span>
                 {drama.cast}
               </p>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-400 mb-6">
                 <span className="text-gray-200 font-semibold">Network: </span>
                 {drama.network}
               </p>
+
+              {user ? (
+                <div>
+                  <p className="text-sm text-gray-400 mb-2 font-semibold">Add to Watchlist:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {statusOptions.map(option => (
+                      <button
+                        key={option.value}
+                        onClick={() =>
+                          status === option.value
+                            ? removeFromWatchlist(drama.id)
+                            : status
+                            ? updateStatus(drama.id, option.value)
+                            : addToWatchlist(drama.id, option.value)
+                        }
+                        className={`px-4 py-2 rounded-lg text-sm transition ${
+                          status === option.value
+                            ? 'bg-rose-500 text-white'
+                            : 'bg-gray-800 text-gray-400 hover:text-white'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                    {status && (
+                      <button
+                        onClick={() => removeFromWatchlist(drama.id)}
+                        className="px-4 py-2 rounded-lg text-sm bg-gray-800 text-red-400 hover:text-red-300 transition"
+                      >
+                        ✕ Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => navigate('/auth')}
+                  className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg text-sm transition"
+                >
+                  Sign in to add to Watchlist
+                </button>
+              )}
             </div>
           </div>
         </div>
       </main>
     </div>
-  );
+  )
 }
 
-export default DramaDetail;
+export default DramaDetail
