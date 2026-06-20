@@ -1,6 +1,10 @@
 # DramaList 🎬
 
+<<<<<<< HEAD
 A Letterboxd-style web app for discovering, tracking, and rating international dramas — Korean, Chinese, Turkish, Japanese, Thai, and more.
+=======
+A Letterboxd-style web app for discovering, tracking, and rating international dramas.
+>>>>>>> c97543b6b6796f515882f8bbc07ce097eec07da1
 
 **Live site:** [drama-curator-pi.vercel.app](https://drama-curator-pi.vercel.app/)
 **Repo:** [github.com/Tselate/drama-curator](https://github.com/Tselate/drama-curator)
