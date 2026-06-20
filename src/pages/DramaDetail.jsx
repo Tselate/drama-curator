@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import StarRating from '../components/StarRating'
+import DramaCard from '../components/DramaCard'
 import { useDrama } from '../hooks/useDrama'
 import { useWatchlist } from '../hooks/useWatchlist'
 import { useAuth } from '../hooks/useAuth'
+import { useRecommendations } from '../hooks/useRecommendations'
 
 function DramaDetail() {
   const { id } = useParams()
@@ -11,6 +13,7 @@ function DramaDetail() {
   const { addToWatchlist, updateStatus, removeFromWatchlist, getStatus, rateDrama, watchlist } = useWatchlist()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const { recommendations } = useRecommendations(drama)
 
   if (loading) return <p className="text-white p-6">Loading...</p>
   if (error) return <p className="text-red-500 p-6">Something went wrong.</p>
@@ -115,6 +118,16 @@ function DramaDetail() {
             </div>
           </div>
         </div>
+        {recommendations.length > 0 && (
+          <div className="mt-10">
+            <h3 className="text-xl font-semibold mb-4">More Like This</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+              {recommendations.map(rec => (
+                <DramaCard key={rec.id} drama={rec} />
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
