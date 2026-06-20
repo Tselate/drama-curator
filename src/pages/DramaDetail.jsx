@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import StarRating from '../components/StarRating'
 import { useDrama } from '../hooks/useDrama'
 import { useWatchlist } from '../hooks/useWatchlist'
 import { useAuth } from '../hooks/useAuth'
@@ -7,7 +8,7 @@ import { useAuth } from '../hooks/useAuth'
 function DramaDetail() {
   const { id } = useParams()
   const { drama, loading, error } = useDrama(id)
-  const { addToWatchlist, updateStatus, removeFromWatchlist, getStatus } = useWatchlist()
+  const { addToWatchlist, updateStatus, removeFromWatchlist, getStatus, rateDrama, watchlist } = useWatchlist()
   const { user } = useAuth()
   const navigate = useNavigate()
 
@@ -91,6 +92,15 @@ function DramaDetail() {
                       >
                         ✕ Remove
                       </button>
+                    )}
+                    {status && (
+                      <div className="mt-4">
+                        <p className="text-sm text-gray-400 mb-2 font-semibold">Your Rating:</p>
+                        <StarRating
+                          rating={watchlist.find(item => item.drama_id === drama.id)?.user_rating || 0}
+                          onRate={(rating) => rateDrama(drama.id, rating)}
+                        />
+                      </div>
                     )}
                   </div>
                 </div>

@@ -73,9 +73,24 @@ export function useWatchlist() {
     else setWatchlist(prev => prev.filter(item => item.drama_id !== dramaId))
   }
 
+  async function rateDrama(dramaId, rating) {
+    const { error } = await supabase
+      .from('watchlist')
+      .update({ user_rating: rating })
+      .eq('user_id', user.id)
+      .eq('drama_id', dramaId)
+
+    if (error) console.error(error)
+    else setWatchlist(prev =>
+      prev.map(item =>
+        item.drama_id === dramaId ? { ...item, user_rating: rating } : item
+      )
+    )
+  }
+
   function getStatus(dramaId) {
     return watchlist.find(item => item.drama_id === dramaId)?.status ?? null
   }
 
-  return { watchlist, loading, addToWatchlist, updateStatus, removeFromWatchlist, getStatus }
+  return { watchlist, loading, addToWatchlist, updateStatus, removeFromWatchlist, getStatus, rateDrama }
 }
